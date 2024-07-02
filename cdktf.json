@@ -1,0 +1,44 @@
+{
+  "language": "java",
+  "app": "./gradlew run",
+  "projectId": "65b8bc44-b4c7-42b8-a286-a13e1f0844d3",
+  "codeMakerOutput": "imports",
+  "terraformProviders": [],
+  "terraformModules": [
+    {
+      "name": "lambda",
+      "source": "terraform-aws-modules/lambda/aws",
+      "version": "~> 7.4"
+    },
+    {
+      "name": "ec2-instance",
+      "source": "terraform-aws-modules/ec2-instance/aws",
+      "version": "~> 5.6"
+    },
+    {
+      "name": "s3bucket",
+      "source": "terraform-aws-modules/s3-bucket/aws",
+      "version": "~> 4.1"
+    },
+    {
+      "name": "step-functions",
+      "source": "terraform-aws-modules/step-functions/aws",
+      "version": "~> 4.2"
+    },
+    {
+      "name": "metric-alarm",
+      "source": "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm",
+      "version": "~> 3.0"
+    },
+    {
+      "name": "eventbridge",
+      "source": "terraform-aws-modules/eventbridge/aws",
+      "version": "~> 3.5"
+    },
+    {
+      "name": "secretsmanager",
+      "source": "terraform-aws-modules/secrets-manager/aws",
+      "version": "~> 1.1"
+    }
+  ]
+}

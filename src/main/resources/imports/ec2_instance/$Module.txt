@@ -1,0 +1,2 @@
+ec2-instance.Ec2Instance=imports.ec2_instance.Ec2Instance
+ec2-instance.Ec2InstanceConfig=imports.ec2_instance.Ec2InstanceConfig

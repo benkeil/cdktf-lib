@@ -1,0 +1,60 @@
+name: 'CI & CD'
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  id-token: 'write'
+  contents: 'write'
+  packages: 'write'
+  pull-requests: 'write'
+  issues: 'read'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.provide-version.outputs.release_version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/vault-action@v2.7.5
+        with:
+          url: ${{ secrets.VAULT_ADDRESS_LIVE }}
+          method: jwt
+          path: jwt_github
+          role: pdh-distribution-analytics
+          jwtGithubAudience: ${{ secrets.VAULT_JWT_GITHUB_AUDIENCE }}
+          exportToken: "true"
+          secrets: |
+            pdh-distribution-analytics/data/global/config github-packages-token | GITHUB_PACKAGES_READ_TOKEN;
+
+      - name: Setup Node for semantic-release
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: corretto
+          cache: gradle
+
+      - name: Generate module and provider bindings
+        run: npx cdktf-cli@0.20.3 get
+
+      - name: Run Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        with:
+          extra_plugins: |-
+            semantic-release
+            @semantic-release/changelog
+            @semantic-release/exec
+            @semantic-release/git
+        env:
+          GITHUB_PACKAGES_WRITE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

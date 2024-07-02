@@ -1,0 +1,12 @@
+{
+  "cdktf": "0.20.4",
+  "providers": {
+    "ec2-instance": "~> 5.6",
+    "eventbridge": "~> 3.5",
+    "lambda": "~> 7.4",
+    "metric-alarm": "~> 3.0",
+    "s3bucket": "~> 4.1",
+    "secretsmanager": "~> 1.1",
+    "step-functions": "~> 4.2"
+  }
+}

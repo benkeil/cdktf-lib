@@ -1,0 +1,2 @@
+metric-alarm.MetricAlarm=imports.metric_alarm.MetricAlarm
+metric-alarm.MetricAlarmConfig=imports.metric_alarm.MetricAlarmConfig

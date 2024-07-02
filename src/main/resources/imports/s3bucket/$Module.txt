@@ -1,0 +1,2 @@
+s3bucket.S3Bucket=imports.s3bucket.S3Bucket
+s3bucket.S3BucketConfig=imports.s3bucket.S3BucketConfig

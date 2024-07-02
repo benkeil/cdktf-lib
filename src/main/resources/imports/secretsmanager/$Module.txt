@@ -1,0 +1,2 @@
+secretsmanager.Secretsmanager=imports.secretsmanager.Secretsmanager
+secretsmanager.SecretsmanagerConfig=imports.secretsmanager.SecretsmanagerConfig

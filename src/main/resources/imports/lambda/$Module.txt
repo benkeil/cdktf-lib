@@ -1,0 +1,2 @@
+lambda.Lambda=imports.lambda.Lambda
+lambda.LambdaConfig=imports.lambda.LambdaConfig

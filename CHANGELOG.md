@@ -1,3 +1,10 @@
+# 1.0.0 (2024-07-03)
+
+
+### Features
+
+* add `Grantable` interface ([3b01de5](https://github.com/benkeil/cdktf-lib/commit/3b01de57eba3a45144522e1f96e3fa93aa042203))
+
 # [2.1.0](https://github.com/otto-ec/pdh-da_terraform-cdk-library/compare/v2.0.0...v2.1.0) (2024-05-23)
 
 

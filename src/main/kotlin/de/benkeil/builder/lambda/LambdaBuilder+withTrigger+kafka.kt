@@ -7,6 +7,7 @@ import com.hashicorp.cdktf.providers.aws.lambda_event_source_mapping.LambdaEvent
 import de.benkeil.builder.secretsmanager.SecretsmanagerBuilder
 import de.benkeil.builder.secretsmanager.SecretsmanagerPermissions
 import de.benkeil.builder.secretsmanager.fromData
+import de.benkeil.builder.secretsmanager.grantScope
 import de.benkeil.stack.DefaultTerraformStack
 
 context(DefaultTerraformStack)
@@ -29,7 +30,7 @@ fun TriggerContext.kafka(
                 ))
             .build()
 
-    grantPermissions(secretsmanager, SecretsmanagerPermissions.Read)
+    grant(secretsmanager.grantScope, SecretsmanagerPermissions.Read)
 
     if (readProperties != null) {
       addPostBuildAction {

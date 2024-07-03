@@ -1,7 +1,15 @@
 package de.benkeil.builder.secretsmanager
 
-import de.benkeil.builder.IamPermissionScope
-import de.benkeil.builder.Permissions
+import de.benkeil.permissions.GrantableScope
+import de.benkeil.permissions.IamPermissionScope
+import de.benkeil.permissions.Permissions
+import imports.secretsmanager.Secretsmanager
+
+val Secretsmanager.grantScope
+  get() =
+      object : GrantableScope<SecretsmanagerPermissions> {
+        override fun arns(): List<String> = listOf(secretArnOutput)
+      }
 
 enum class SecretsmanagerPermissions(override val iamPermissions: Collection<Iam>) :
     Permissions<SecretsmanagerPermissions.Iam> {

@@ -1,7 +1,7 @@
 package de.benkeil.builder.dynamodb
 
-import de.benkeil.builder.IamPermissionScope
-import de.benkeil.builder.Permissions
+import de.benkeil.permissions.IamPermissionScope
+import de.benkeil.permissions.Permissions
 
 enum class DynamoDbTablePermissions(override val iamPermissions: Collection<Iam>) :
     Permissions<DynamoDbTablePermissions.Iam> {

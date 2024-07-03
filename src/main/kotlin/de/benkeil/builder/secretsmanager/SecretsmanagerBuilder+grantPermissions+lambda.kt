@@ -1,7 +1,7 @@
 package de.benkeil.builder.secretsmanager
 
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy_document.DataAwsIamPolicyDocumentStatement
-import de.benkeil.builder.toIamActions
+import de.benkeil.permissions.toIamActions
 import imports.lambda.Lambda
 
 fun SecretsmanagerBuilder.grantPermissions(

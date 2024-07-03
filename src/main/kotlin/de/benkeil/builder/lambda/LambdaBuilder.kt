@@ -3,6 +3,11 @@ package de.benkeil.builder.lambda
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy.DataAwsIamPolicy
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy_document.DataAwsIamPolicyDocumentStatement
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.permissions.Grantable
+import de.benkeil.permissions.GrantableScope
+import de.benkeil.permissions.IamPermissionScope
+import de.benkeil.permissions.Permissions
+import de.benkeil.permissions.toIamActions
 import de.benkeil.stack.DefaultTerraformStack
 import imports.lambda.Lambda
 import kotlin.time.Duration
@@ -21,7 +26,8 @@ class LambdaBuilder(
         config,
         "lambda",
         Lambda.Builder::create,
-    ) {
+    ),
+    Grantable<LambdaBuilder> {
   internal lateinit var function: Lambda
   internal val environment: MutableMap<String, String> = config.environment.toMutableMap()
   internal val lambdaFunctionName = "${env.stage}--${env.service}--${config.name}"
@@ -71,6 +77,19 @@ class LambdaBuilder(
     }
 
     addPostBuildAction { function = it }
+  }
+
+  override fun <T, P> grant(to: GrantableScope<T>, vararg permissions: T): LambdaBuilder where
+  T : Permissions<P>,
+  P : Enum<P>,
+  P : IamPermissionScope {
+    applicationPolicyStatements.add(
+        DataAwsIamPolicyDocumentStatement.builder()
+            .actions(permissions.toIamActions())
+            .resources(to.arns())
+            .effect("Allow")
+            .build())
+    return this
   }
 
   data class Config(

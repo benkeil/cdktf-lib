@@ -22,7 +22,7 @@ class UserDataContext {
   fun cloudInit(block: CloudInitContext.() -> Unit) {
     val cloudInit = CloudInitContext().apply(block).build()
     val content = mapper.writeValueAsString(cloudInit)
-    // println(content)
+    println(content)
     parts.add(
         DataCloudinitConfigPart.builder()
             .contentType("text/cloud-config")

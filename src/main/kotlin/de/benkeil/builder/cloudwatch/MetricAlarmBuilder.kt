@@ -1,12 +1,13 @@
 package de.benkeil.builder.cloudwatch
 
-import com.hashicorp.cdktf.Fn
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.benkeil.builder.ResourceBuilder
-import de.benkeil.model.Stage
 import de.benkeil.stack.DefaultTerraformStack
 import imports.metric_alarm.MetricAlarm
 import kotlin.time.Duration
 import software.constructs.Construct
+
+private val mapper = jacksonObjectMapper()
 
 context(DefaultTerraformStack)
 class MetricAlarmBuilder(scope: Construct, id: String, config: Config) :
@@ -21,13 +22,13 @@ class MetricAlarmBuilder(scope: Construct, id: String, config: Config) :
 
   init {
     builder
-        .alarmName("${env.service}.${config.name}")
+        .alarmName("${env.stage}.${env.service}.${config.name}")
         .alarmDescription(
-            Fn.jsonencode(
+            mapper.writeValueAsString(
                 AlarmDescription(
                     description = config.description,
                     critical = config.critical,
-                    stage = env.stage,
+                    environment = env.stage.name.lowercase(),
                     service = env.service,
                     impact = config.impact,
                 )))
@@ -36,17 +37,14 @@ class MetricAlarmBuilder(scope: Construct, id: String, config: Config) :
         .threshold(config.threshold)
         .period(config.period.inWholeSeconds.toString())
         .unit(config.unit.value)
+        .namespace(config.namespace)
         .metricName(config.metricName)
         .statistic(config.statistic.name)
         .treatMissingData(config.treatMissingData.name)
-    //        .okActions(
-    //            listOf(
-    //
-    // "arn:aws:sns:${env.awsRegion}:${env.awsAccountId}:alarms-${env.environment}"))
-    //        .alarmActions(
-    //            listOf(
-    //
-    // "arn:aws:sns:${env.awsRegion}:${env.awsAccountId}:alarms-${env.environment}"))
+        .dimensions(config.dimensions)
+        .okActions(listOf("arn:aws:sns:${env.awsRegion}:${env.awsAccountId}:alarms-${env.stage}"))
+        .alarmActions(
+            listOf("arn:aws:sns:${env.awsRegion}:${env.awsAccountId}:alarms-${env.stage}"))
   }
 
   data class Config(
@@ -59,16 +57,18 @@ class MetricAlarmBuilder(scope: Construct, id: String, config: Config) :
       /** The number of periods over which data is compared to the specified threshold. */
       val period: Duration,
       val unit: MetricUnit,
+      val namespace: String,
       val metricName: String,
       val statistic: Statistic,
       val treatMissingData: TreatMissingData,
+      val dimensions: Map<String, String>? = null,
       val impact: Impact = Impact("none", "none"),
   )
 
   data class AlarmDescription(
       val description: String,
       val critical: Boolean,
-      val stage: Stage,
+      val environment: String,
       val service: String,
       val impact: Impact,
   )

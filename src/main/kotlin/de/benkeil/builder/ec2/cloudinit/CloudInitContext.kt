@@ -12,7 +12,8 @@ data class CloudInit(
     @JsonUnwrapped val packages: Packages?,
     @JsonUnwrapped val users: Users?,
     val systemInfo: SystemInfo?,
-    val runcmd: List<List<String>>?,
+    val runcmd: List<String>?,
+    val ansible: Ansible?
 )
 
 @CloudInitLanguageDsl
@@ -24,7 +25,8 @@ class CloudInitContext {
   private var packages: Packages? = null
   private var users: Users? = null
   private var systemInfo: SystemInfo? = null
-  private var runcmd: MutableList<List<String>>? = null
+  private var runcmd: MutableList<String>? = null
+  private var ansible: Ansible? = null
 
   fun packageUpgrade(value: Boolean = true): CloudInitContext {
     packageUpgrade = value
@@ -51,6 +53,10 @@ class CloudInitContext {
     systemInfo = SystemInfoContext().apply(block).build()
   }
 
+  fun ansible(block: AnsibleContext.() -> Unit) {
+    ansible = AnsibleContext().apply(block).build()
+  }
+
   fun packages(
       update: Boolean? = null,
       upgrade: Boolean? = null,
@@ -67,11 +73,11 @@ class CloudInitContext {
             .build()
   }
 
-  fun runCmd(vararg cmd: String) {
+  fun runCmd(cmd: String) {
     if (runcmd == null) {
       runcmd = mutableListOf()
     }
-    runcmd!!.add(cmd.toList())
+    runcmd!!.add(cmd)
   }
 
   fun build(): CloudInit {
@@ -84,6 +90,7 @@ class CloudInitContext {
         users = users,
         systemInfo = systemInfo,
         runcmd = runcmd,
+        ansible = ansible,
     )
   }
 }

@@ -1,6 +1,7 @@
 package de.benkeil.builder.ec2
 
 import com.hashicorp.cdktf.Testing
+import de.benkeil.builder.ec2.cloudinit.AnsibleInstallMethod
 import de.benkeil.builder.ec2.cloudinit.FileEncoding
 import de.benkeil.builder.ec2.cloudinit.Layout
 import de.benkeil.builder.ec2.cloudinit.TableType
@@ -19,6 +20,12 @@ class Ec2InstanceBuilderTest :
                 .withUserData {
                   cloudInit {
                     packageUpgrade()
+                    ansible {
+                      packageName("ansible")
+                      installMethod(AnsibleInstallMethod.distro)
+                      runUser("ec2-user")
+                      pull("https://github.com/benkeil/paperless.git", "playbook.yml")
+                    }
                     writeFiles {
                       file("/opt/application/plain.txt", "Hello, World!")
                       file(
@@ -32,7 +39,7 @@ class Ec2InstanceBuilderTest :
                       filesystem("documents", "xfs", "documents", "1")
                     }
                     mounts {
-                      default("xfs", "defaults,nofail", "0", "2")
+                      default("ext4", "defaults,nofail", "0", "2")
                       mount(aliasOrPath = "documents", fsFile = "/mnt/documents")
                     }
                     packages(update = true, upgrade = true) {
@@ -44,6 +51,7 @@ class Ec2InstanceBuilderTest :
                       group("admin", listOf("benkeil"))
                     }
                     systemInfo { defaultUser(User(groups = listOf("docker"))) }
+                    runCmd("echo 'Hello, World!' > /tmp/hello.txt")
                   }
                   shellScript("custom-init.sh", "echo 'Hello, World!' > /tmp/hello.txt")
                 }

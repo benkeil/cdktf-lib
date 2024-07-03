@@ -1,7 +1,7 @@
 package de.benkeil.builder.s3
 
-import de.benkeil.builder.IamPermissionScope
-import de.benkeil.builder.Permissions
+import de.benkeil.permissions.IamPermissionScope
+import de.benkeil.permissions.Permissions
 
 enum class S3BucketPermissions(override val iamPermissions: Collection<Iam>) : Permissions<S3BucketPermissions.Iam> {
     Read(

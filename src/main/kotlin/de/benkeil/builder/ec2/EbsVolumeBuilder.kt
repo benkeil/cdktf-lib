@@ -7,8 +7,10 @@ import de.benkeil.builder.ResourceBuilder
 import de.benkeil.model.DefaultEnvironment
 import de.benkeil.model.Size
 import de.benkeil.model.gigaBytes
+import de.benkeil.stack.DefaultTerraformStack
 import software.constructs.Construct
 
+context(DefaultTerraformStack<DefaultEnvironment>)
 class EbsVolumeBuilder(
     scope: Construct,
     id: String,

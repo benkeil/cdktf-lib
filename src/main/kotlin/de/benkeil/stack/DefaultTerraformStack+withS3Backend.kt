@@ -1,8 +1,9 @@
 package de.benkeil.stack
 
 import com.hashicorp.cdktf.S3Backend
+import de.benkeil.model.DefaultEnvironment
 
-fun DefaultTerraformStack.withS3Backend(): DefaultTerraformStack {
+fun <E : DefaultEnvironment> DefaultTerraformStack<E>.withS3Backend(): DefaultTerraformStack<E> {
   S3Backend.Builder.create(this)
       .key("${env.service}-$stackId.tfstate")
       .bucket("${env.awsAccountId}-terraform-state")

@@ -5,12 +5,12 @@ import com.hashicorp.cdktf.TerraformStack
 import de.benkeil.model.DefaultEnvironment
 import software.constructs.Construct
 
-open class DefaultTerraformStack(
+open class DefaultTerraformStack<out E : DefaultEnvironment>(
     scope: Construct,
     val stackId: String,
-    override val env: DefaultEnvironment,
-    block: (DefaultTerraformStack.() -> Unit)? = null,
-) : TerraformStack(scope, stackId), EnvironmentProvider {
+    val env: E,
+    block: (DefaultTerraformStack<E>.() -> Unit)? = null,
+) : TerraformStack(scope, stackId) {
 
   init {
     block?.invoke(this)
@@ -21,8 +21,4 @@ open class DefaultTerraformStack(
   inline fun <reified T : TerraformProvider> getProvider(alias: String? = null): TerraformProvider {
     return allProviders().first { it is T && it.alias == alias }
   }
-}
-
-interface EnvironmentProvider {
-  val env: DefaultEnvironment
 }

@@ -8,9 +8,10 @@ import de.benkeil.builder.secretsmanager.SecretsmanagerBuilder
 import de.benkeil.builder.secretsmanager.SecretsmanagerPermissions
 import de.benkeil.builder.secretsmanager.fromData
 import de.benkeil.builder.secretsmanager.grantScope
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 fun TriggerContext.kafka(
     id: String,
     name: String,

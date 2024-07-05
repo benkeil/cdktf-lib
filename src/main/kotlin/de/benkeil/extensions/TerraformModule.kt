@@ -6,7 +6,7 @@ import software.constructs.Construct
 
 fun <T : TerraformModule> T.withTerraformOutput(
     scope: Construct,
-    block: (T) -> Pair<String, String>
+    block: (T) -> Pair<String, Any>
 ): T {
   val (key, value) = block(this)
   TerraformOutput.Builder.create(scope, key).value(value).build()

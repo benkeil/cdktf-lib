@@ -23,8 +23,7 @@ class StepFunctionBuilderTest :
 
       val stack =
           DefaultTerraformStack(app, "test", env) {
-            val bucket =
-                S3BucketBuilder(this, "Bucket", S3BucketBuilder.Config(env, "bucket")).build()
+            val bucket = S3BucketBuilder(this, "Bucket", S3BucketBuilder.Config("bucket")).build()
 
             val createQueryString =
                 LambdaBuilder(

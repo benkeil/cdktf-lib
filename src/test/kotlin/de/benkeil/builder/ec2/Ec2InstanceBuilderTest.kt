@@ -5,7 +5,6 @@ import de.benkeil.builder.ec2.cloudinit.AnsibleInstallMethod
 import de.benkeil.builder.ec2.cloudinit.FileEncoding
 import de.benkeil.builder.ec2.cloudinit.Layout
 import de.benkeil.builder.ec2.cloudinit.TableType
-import de.benkeil.builder.ec2.cloudinit.User
 import de.benkeil.builder.fixtures.createTestEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import io.kotest.core.spec.style.FunSpec
@@ -47,10 +46,16 @@ class Ec2InstanceBuilderTest :
                       name("docker")
                     }
                     users {
+                      defaultUser()
+                      user(
+                          "benkeil",
+                          groups = listOf("admin"),
+                          sshAuthorizedKeys = listOf("ssh-rsa iagdiuasgdiasgdi;ashdasgi;asg;idg"),
+                      )
                       group("docker")
                       group("admin", listOf("benkeil"))
                     }
-                    systemInfo { defaultUser(User(groups = listOf("docker"))) }
+                    systemInfo { defaultUser(groups = listOf("docker")) }
                     runCmd("echo 'Hello, World!' > /tmp/hello.txt")
                   }
                   shellScript("custom-init.sh", "echo 'Hello, World!' > /tmp/hello.txt")

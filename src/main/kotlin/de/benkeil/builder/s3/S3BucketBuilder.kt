@@ -7,7 +7,7 @@ import de.benkeil.stack.buildArn
 import imports.s3bucket.S3Bucket
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class S3BucketBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<S3Bucket, S3Bucket.Builder, S3BucketBuilder.Config, S3BucketBuilder>(
         scope,

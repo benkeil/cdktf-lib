@@ -4,10 +4,11 @@ import com.hashicorp.cdktf.TerraformResourceLifecycle
 import com.hashicorp.cdktf.providers.aws.dynamodb_table.DynamodbTable
 import com.hashicorp.cdktf.providers.aws.dynamodb_table.DynamodbTableAttribute
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class DynamoDbTableBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<
         DynamodbTable, DynamodbTable.Builder, DynamoDbTableBuilder.Config, DynamoDbTableBuilder>(

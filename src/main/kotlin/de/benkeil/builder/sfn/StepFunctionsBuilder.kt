@@ -2,11 +2,12 @@ package de.benkeil.builder.sfn
 
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy_document.DataAwsIamPolicyDocumentStatement
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import imports.step_functions.StepFunctions
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class StepFunctionsBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<
         StepFunctions, StepFunctions.Builder, StepFunctionsBuilder.Config, StepFunctionsBuilder>(

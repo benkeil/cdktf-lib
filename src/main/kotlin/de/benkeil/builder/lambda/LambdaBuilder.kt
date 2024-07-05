@@ -3,6 +3,7 @@ package de.benkeil.builder.lambda
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy.DataAwsIamPolicy
 import com.hashicorp.cdktf.providers.aws.data_aws_iam_policy_document.DataAwsIamPolicyDocumentStatement
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.permissions.Grantable
 import de.benkeil.permissions.GrantableScope
 import de.benkeil.permissions.IamPermissionScope
@@ -14,7 +15,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class LambdaBuilder(
     scope: Construct,
     id: String,

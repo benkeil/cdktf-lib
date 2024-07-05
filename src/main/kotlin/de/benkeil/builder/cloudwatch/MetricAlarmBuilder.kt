@@ -2,6 +2,7 @@ package de.benkeil.builder.cloudwatch
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import imports.metric_alarm.MetricAlarm
 import kotlin.time.Duration
@@ -9,7 +10,7 @@ import software.constructs.Construct
 
 private val mapper = jacksonObjectMapper()
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class MetricAlarmBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<
         MetricAlarm, MetricAlarm.Builder, MetricAlarmBuilder.Config, MetricAlarmBuilder>(

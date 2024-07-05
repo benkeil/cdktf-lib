@@ -3,11 +3,12 @@ package de.benkeil.builder.eventbridge
 import com.hashicorp.cdktf.providers.aws.cloudwatch_event_bus.CloudwatchEventBus
 import com.hashicorp.cdktf.providers.aws.scheduler_schedule_group.SchedulerScheduleGroup
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import imports.eventbridge.Eventbridge
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class EventbridgeSchedulerBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<
         Eventbridge,

@@ -4,9 +4,10 @@ import com.hashicorp.cdktf.providers.aws.cloudwatch_event_bus.CloudwatchEventBus
 import com.hashicorp.cdktf.providers.aws.scheduler_schedule_group.SchedulerScheduleGroup
 import de.benkeil.builder.eventbridge.EventbridgeSchedulerBuilder
 import de.benkeil.builder.eventbridge.forStepFunction
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 fun TriggerContext.scheduler(
     id: String,
     name: String,

@@ -2,10 +2,11 @@ package de.benkeil.builder.cloudwatch
 
 import com.hashicorp.cdktf.providers.aws.cloudwatch_dashboard.CloudwatchDashboard
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class DashboardBuilder(scope: Construct, id: String, config: Config) :
     ResourceBuilder<
         CloudwatchDashboard,

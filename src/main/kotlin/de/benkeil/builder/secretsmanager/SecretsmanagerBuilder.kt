@@ -1,11 +1,12 @@
 package de.benkeil.builder.secretsmanager
 
 import de.benkeil.builder.ResourceBuilder
+import de.benkeil.model.DefaultEnvironment
 import de.benkeil.stack.DefaultTerraformStack
 import imports.secretsmanager.Secretsmanager
 import software.constructs.Construct
 
-context(DefaultTerraformStack)
+context(DefaultTerraformStack<DefaultEnvironment>)
 class SecretsmanagerBuilder(
     scope: Construct,
     id: String,

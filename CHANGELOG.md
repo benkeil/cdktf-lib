@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/benkeil/cdktf-lib/compare/v1.0.0...v1.1.0) (2024-07-10)
+
+
+### Features
+
+* more features ([9ed0c2e](https://github.com/benkeil/cdktf-lib/commit/9ed0c2ecf478c2cd0572224e03b6b1fd2154bf99))
+
 # 1.0.0 (2024-07-03)
 
 

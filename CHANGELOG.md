@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/benkeil/cdktf-lib/compare/v1.1.0...v1.2.0) (2024-07-10)
+
+
+### Features
+
+* add sensitive to withTerraformOutput ([c2abaec](https://github.com/benkeil/cdktf-lib/commit/c2abaec3194e10752a344e749762e3441d1990a7))
+
 # [1.1.0](https://github.com/benkeil/cdktf-lib/compare/v1.0.0...v1.1.0) (2024-07-10)
 
 

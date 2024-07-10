@@ -1,5 +1,6 @@
 package de.benkeil.builder
 
+import com.hashicorp.cdktf.TerraformOutput
 import software.constructs.Construct
 
 abstract class ResourceBuilder<
@@ -18,33 +19,40 @@ abstract class ResourceBuilder<
   private val postBuildActions: MutableCollection<(ResourceType) -> Unit> = mutableListOf()
   internal val builder = builderCreator(scope, computedId)
 
-  // TODO check how to remove warning
-  // https://stackoverflow.com/questions/3921616/leaking-this-in-constructor-warning
   @Suppress("UNCHECKED_CAST")
-  @SuppressWarnings("LeakingThisInConstructor")
-  private val self: SelfType = this as SelfType
-
   fun applyBuilder(block: BuilderType.() -> Unit): SelfType {
     builder.apply(block)
-    return self
+    return this as SelfType
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun addPreBuildAction(action: SelfType.() -> Unit): SelfType {
     preBuildActions.add(action)
-    return self
+    return this as SelfType
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun addPostBuildAction(action: (ResourceType) -> Unit): SelfType {
     postBuildActions.add(action)
-    return self
+    return this as SelfType
   }
 
   fun build(): ResourceType {
-    preBuildActions.forEach { it(self) }
+    preBuildActions.forEach { @Suppress("UNCHECKED_CAST") it(this as SelfType) }
     val resource = builder.build()
     postBuildActions.forEach { it(resource) }
     return resource
   }
 
   private fun createId(type: String, givenId: String) = "${type}_$givenId"
+
+  fun withTerraformOutput(
+      sensitive: Boolean = false,
+      block: (ResourceType) -> Pair<String, Any>
+  ): SelfType {
+    return addPostBuildAction { resource ->
+      val (key, value) = block(resource)
+      TerraformOutput.Builder.create(scope, key).sensitive(sensitive).value(value).build()
+    }
+  }
 }

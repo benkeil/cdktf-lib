@@ -3,7 +3,7 @@
 [libraries]
 cdktf = { module = "com.hashicorp:cdktf", version = "0.20.3" }
 constructs = { module = "software.constructs:constructs", version = "10.3.0" }
-cdktf-provider-aws = { module = "com.hashicorp:cdktf-provider-aws", version = "19.22.0" }
+cdktf-provider-aws = { module = "com.hashicorp:cdktf-provider-aws", version = "19.30.0" }
 cdktf-provider-null = { module = "com.hashicorp:cdktf-provider-null", version = "10.0.0" }
 cdktf-provider-cloudinit = { module = "com.hashicorp:cdktf-provider-cloudinit", version = "10.0.1" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.17.1" }
